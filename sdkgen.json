@@ -1,0 +1,9 @@
+{
+  "type": "client-csharp",
+  "require": {
+    "{{typehub_user}}/{{typehub_name}}": {
+      "target": "./src/{{namespace}}",
+      "namespace": "{{namespace}}"
+    }
+  }
+}
