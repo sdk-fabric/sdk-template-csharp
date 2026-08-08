@@ -1,9 +1,7 @@
 
-# {{display_name}} SDK
+# {{github_repository}}
 
-This SDK is managed by the [SDK Fabric](https://sdk-fabric.org/) project.
-Our goal is to build a global infrastructure to automatically generate
-an SDK for every API, please take a look at our website for more information.
+{{description}}
 
 ## Usage
 
@@ -18,4 +16,4 @@ Client client = Client.Build("[access_token]")
 ```
 
 You can find all available operations and types at:
-https://app.typehub.cloud/d/sdkfabric/{{name}}
+https://app.typehub.cloud/d/{{typehub_user}}/{{typehub_name}}
