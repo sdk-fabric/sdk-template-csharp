@@ -54,13 +54,8 @@ def load_replacements(config_path: Path) -> dict[str, str]:
 
         str_val = str(val)
 
-        # 1. Standard plain text replacement: {{key}}
-        replacements[f"{{{{{key}}}}}"] = str_val
-
-        # 2. JSON-escaped string literal replacement: {{key:json}}
-        # json.dumps("val")[1:-1] strips the surrounding quotes created by json.dumps()
-        escaped_json_val = json.dumps(str_val)[1:-1]
-        replacements[f"{{{{{key}:json}}}}}"] = escaped_json_val
+        replacements["{{" + key + "}}"] = str_val
+        replacements["{{" + key + ":json}}"] = json.dumps(str_val)[1:-1]
 
     return replacements
 
