@@ -1,11 +1,13 @@
 
 # {{github_repository}}
 
-{{description}}
+This [SDK]({{github_url}}) is managed by the [SDK Fabric](https://sdk-fabric.org/) project, a global infrastructure to
+automatically generate SDKs for every API.
+
+You can find more information about this SDK at [TypeHub](https://typehub.cloud/):
+https://app.typehub.cloud/d/{{typehub_user}}/{{typehub_document}}
 
 ## Usage
-
-The following example shows how you initialize the client:
 
 ```csharp
 using {{namespace}}.Client;
@@ -14,6 +16,3 @@ Client client = Client.Build("[access_token]")
 
 // @TODO use the client
 ```
-
-You can find all available operations and types at:
-https://app.typehub.cloud/d/{{typehub_user}}/{{typehub_document}}
