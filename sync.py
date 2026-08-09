@@ -91,8 +91,12 @@ def main() -> None:
 
         rel_path = src_file.relative_to(template_dir)
 
-        # Skip ignored directories or files
+        # Skip ignored root entries
         if any(part in ignored_parts for part in rel_path.parts):
+            continue
+
+        # Skip everything under .github/workflows specifically
+        if len(rel_path.parts) >= 2 and rel_path.parts[0] == ".github" and rel_path.parts[1] == "workflows":
             continue
 
         dest_file = Path(rel_path)
