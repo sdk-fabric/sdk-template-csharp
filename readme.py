@@ -8,7 +8,7 @@ from pathlib import Path
 
 
 def to_pascal_case(name: str) -> str:
-    """Convert snake_case, camelCase, dot.case, or underscore_case to clean PascalCase."""
+    """Convert snake_case, camelCase, dot.case, or hyphenated names to PascalCase."""
     if not name:
         return ""
     parts = re.split(r"[._-]+", name)
@@ -71,10 +71,24 @@ def generate_usage(lock_file_path: Path) -> str:
             tag_accessor = "client"
 
         method_name = to_pascal_case(method_raw)
-        args_spec = op.get("arguments", {})
+        raw_arguments = op.get("arguments", {})
         call_args = []
 
-        for arg_name, arg_data in args_spec.items():
+        # Normalize arguments format whether it's a list or a dict
+        arguments_list = []
+        if isinstance(raw_arguments, list):
+            arguments_list = raw_arguments
+        elif isinstance(raw_arguments, dict):
+            for name, data in raw_arguments.items():
+                arg_item = dict(data) if isinstance(data, dict) else {}
+                arg_item.setdefault("name", name)
+                arguments_list.append(arg_item)
+
+        for arg_data in arguments_list:
+            if not isinstance(arg_data, dict):
+                continue
+
+            arg_name = arg_data.get("name", "arg")
             param_in = arg_data.get("in")
             schema = arg_data.get("schema", {})
             type_name = map_schema_to_type(schema)
@@ -94,10 +108,10 @@ def generate_usage(lock_file_path: Path) -> str:
                     call_args.append(f"default({type_name})")
 
         return_spec = op.get("return", {})
-        return_schema = return_spec.get("schema", {})
+        return_schema = return_spec.get("schema", {}) if isinstance(return_spec, dict) else {}
         return_type = map_schema_to_type(return_schema) if return_schema else None
 
-        description = op.get("description", "").strip()
+        description = op.get("description", "").strip() if isinstance(op.get("description"), str) else ""
         if description:
             first_line = description.split(".")[0] + "."
             lines.append(f"// {first_line}")
