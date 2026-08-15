@@ -14,5 +14,5 @@ using {{namespace}}.Client;
 
 Client client = Client.Build("[access_token]")
 
-// @TODO use the client
+{{usage}}
 ```
