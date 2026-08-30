@@ -51,6 +51,14 @@ def load_replacements(config_path: Path, lock_path: Path) -> dict[str, str]:
         raw_data.setdefault("github_repository", repo_name)
         raw_data.setdefault("github_url", f"{server_url}/{repo_slug}")
 
+    typehub_user = os.getenv("TYPEHUB_USER")
+    typehub_document = os.getenv("TYPEHUB_DOCUMENT")
+
+    if typehub_user:
+        raw_data["typehub_user"] = typehub_user
+    if typehub_document:
+        raw_data["typehub_document"] = typehub_document
+
     # 3. Dynamically generate C# usage snippets via readme.py
     raw_data["usage"] = generate_usage(lock_path)
 
